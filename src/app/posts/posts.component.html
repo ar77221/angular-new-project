@@ -1,0 +1,25 @@
+<!-- handling the keyup event -->
+<!-- createPost method is passing a referene to this input field, adding a template variable here -->
+<input 
+
+(keyup.enter)="createPost(title)" #title
+type="" class="form-control">
+
+<ul class="list-group">
+	<li 
+  *ngFor="let post of posts"
+  class="list-group-item">
+  
+  <!-- using interpolation to render the title of each post.title -->
+
+
+  <!-- calling update -->
+  <!-- bind this to update post method in componenet and as the argument here to send post object..-->
+  <!--  send -->
+  <button 
+
+  (click)="updatePost(post)"
+  class="btn btn-default btn-sm">update</button>
+  {{ post.title }}
+  </li>
+</ul>
