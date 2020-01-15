@@ -37,6 +37,7 @@ deletePost(id) {
    .catch((error: Response) => {
      if ( error.status === 404)
      return Observable.throw(new NotFoundError());
+     
     return Observable.throw(new AppError(error));
    });
 }
