@@ -107,8 +107,8 @@ posts: any [];
       this.posts.splice(index, 1);
 
    },
-   (error: Response) => {
-     if(error.status === 404)
+   (error: AppError) => {
+     if(error instanceof NotFoundError)
      alert('This post has already been deleted');
 
      else {

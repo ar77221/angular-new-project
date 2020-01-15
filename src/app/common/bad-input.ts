@@ -1,6 +1,6 @@
-// import { AppError } from './common/app-error';
+import { AppError } from './common/app-error';
 
 
-// export class BadInput extends AppError {
+export class BadInput extends AppError {
 
-// }
+}

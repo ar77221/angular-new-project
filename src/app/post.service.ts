@@ -25,9 +25,14 @@ getPosts() {
 //        });
 // }
 //  }
-
+// pass an application specific error object
+//this 400, bad request is a common type of error
 createPost(post) {
   return this.http.post(this.url, JSON.stringify(post));
+  .catch((error: Response) => {
+    if(error.status === 400)
+     return Observable.throw()
+  })
 }
 updatePost(post) {
   return this.http.patch(this.url + '/' + post.id, JSON.stringify({ isRead: true }));
@@ -37,7 +42,7 @@ deletePost(id) {
    .catch((error: Response) => {
      if ( error.status === 404)
      return Observable.throw(new NotFoundError());
-     
+
     return Observable.throw(new AppError(error));
    });
 }
