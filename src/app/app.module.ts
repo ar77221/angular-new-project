@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { PostsComponent } from './posts/posts.component';
-// import { PostsService } from './post.service';
+import { PostsService } from './post.service';
 // import { GithubFollowersComponent } from './github-followers/github-followers.component';
 // import { GithubFollowersService } from './github-followers.service';
 // import { PostsComponent } from './posts/posts.component';
@@ -17,7 +17,7 @@ import { PostsComponent } from './posts/posts.component';
   declarations: [ AppComponent, PostsComponent ],
   
   providers: [
- 
+  PostsService
   ],
   bootstrap:    [ AppComponent ]
 })
