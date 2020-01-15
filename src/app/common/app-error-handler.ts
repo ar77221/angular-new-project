@@ -1,9 +1,9 @@
 
 
-export class AppErrorHandler implements ErrorHandler {
+// export class AppErrorHandler implements ErrorHandler {
 
-  handleError(error) {
-    alert('An unexpected error occurred.');
-    console.log(error);
-  }
-}
+//   handleError(error) {
+//     alert('An unexpected error occurred.');
+//     console.log(error);
+//   }
+// }

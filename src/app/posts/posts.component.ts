@@ -1,6 +1,5 @@
+import { PostsService } from './post.service';
 import { Component, OnInit } from '@angular/core';
-
-import { Http } from '@angular/http';
 
 
 @Component({
@@ -14,19 +13,22 @@ import { Http } from '@angular/http';
 export class PostsComponent implements OnInit {
 
 posts: any [];
-private url= 'https://jsonplaceholder.typicode.com/posts';
 
-  constructor( private http: Http) {
+  constructor( private service: PostsService) {
 
-http.get(this.url)
-    .subscribe(response => {
-
-      this.posts = response.json();
-    });
    }
 
   ngOnInit() {
-    
+   this.service.getPOsts()
+    .subscribe
+    (response => {
+
+      this.posts = response.json();
+    },
+    error => {
+      alert('An unexpected error occurred.');
+      console.log(error);
+    });
   }
 
 // here need to call the server
@@ -46,15 +48,28 @@ http.get(this.url)
     // we pass the post objcet, returing type of this post method, and this returns an observable of response. 
 
 
-    this.http.post(this.url, JSON.stringify(post))
-      .subscribe(response =>  {
+   this.service.createPost(post)
+      .subscribe
+      (response =>  {
 
 // using .notation to access this property
         post['id']= response.json().id;
-        this.posts.splice(0, 0 , post);
-      
-           
+        this.posts.splice(0, 0 , post); 
          
+      },
+      (error: Response) => {
+        if (error.status === 400) {
+
+
+        }
+        // this.form.setErrors(error.json());
+        else {
+          alert('An unexpected error occurred.');
+          console.log(error);
+
+        }
+     
+      
       });
   }
   // using the http object, to send an http request to update the data. 
@@ -69,13 +84,41 @@ http.get(this.url)
 //changing this url, (?)and /, then the ideal the post that we're patching 
 // in the console this fake API is returing the same object 
   updatePost(post) {
-   this.http.patch(this.url, JSON.stringify({ isRead: true }))
-     .subscribe(response => {
+   this.service.updatePost(post)
+     .subscribe
+     (response => {
        console.log(response.json());
+     },
+     error => {
+      alert('An unexpected error occurred.');
+      console.log(error);
+     
+     });
 
-       
-     })
+  }
 
+  // need to reference a specific post
+  deletePost(post) {
+
+  this.service.deletePost(345)
+   .subscribe
+   (response => {
+      let index = this.posts.indexOf(post);
+      this.posts.splice(index, 1);
+
+   },
+   (error: Response) => {
+     if(error.status === 404)
+     alert('This post has already been deleted');
+
+     else {
+
+      alert('An unexpected error occurred.');
+      console.log(error);
+     }
+     
+   
+   });
   }
 
 }
