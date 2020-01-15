@@ -57,9 +57,9 @@ posts: any [];
         this.posts.splice(0, 0 , post); 
          
       },
-      (error: Response) => {
-        if (error.status === 400) {
-
+      (error: AppError) => {
+        if (error.instanceof BadInput) {
+          //  this.form.setErrors(error.originalError);
 
         }
         // this.form.setErrors(error.json());

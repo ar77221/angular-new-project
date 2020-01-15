@@ -31,8 +31,9 @@ createPost(post) {
   return this.http.post(this.url, JSON.stringify(post));
   .catch((error: Response) => {
     if(error.status === 400)
-     return Observable.throw()
-  })
+     return Observable.throw(new BadInput(error.json()));
+     return Observable.throw(new AppError(error.json()));
+  });
 }
 updatePost(post) {
   return this.http.patch(this.url + '/' + post.id, JSON.stringify({ isRead: true }));
