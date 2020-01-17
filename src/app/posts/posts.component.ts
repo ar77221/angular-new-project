@@ -1,4 +1,4 @@
-import { PostsService } from './post.service';
+import { PostService } from './../services/post.service';
 import { Component, OnInit } from '@angular/core';
 
 
@@ -14,20 +14,16 @@ export class PostsComponent implements OnInit {
 
 posts: any [];
 
-  constructor( private service: PostsService) {
+  constructor( private service: PostService) {
 
    }
 
   ngOnInit() {
-   this.service.getPOsts()
-    .subscribe
-    (response => {
+   this.service.getPosts()
+    .subscribe (
+    response => {
 
       this.posts = response.json();
-    },
-    error => {
-      alert('An unexpected error occurred.');
-      console.log(error);
     });
   }
 
@@ -49,8 +45,8 @@ posts: any [];
 
 
    this.service.createPost(post)
-      .subscribe
-      (response =>  {
+      .subscribe (
+      response =>  {
 
 // using .notation to access this property
         post['id']= response.json().id;
@@ -63,13 +59,8 @@ posts: any [];
 
         }
         // this.form.setErrors(error.json());
-        else {
-          alert('An unexpected error occurred.');
-          console.log(error);
-
-        }
-     
-      
+        else throw error;
+        
       });
   }
   // using the http object, to send an http request to update the data. 
@@ -85,14 +76,9 @@ posts: any [];
 // in the console this fake API is returing the same object 
   updatePost(post) {
    this.service.updatePost(post)
-     .subscribe
-     (response => {
+     .subscribe (
+     response => {
        console.log(response.json());
-     },
-     error => {
-      alert('An unexpected error occurred.');
-      console.log(error);
-     
      });
 
   }
@@ -101,9 +87,10 @@ posts: any [];
   deletePost(post) {
 
   this.service.deletePost(345)
-   .subscribe
-   (response => {
+   .subscribe (
+   response => {
       let index = this.posts.indexOf(post);
+
       this.posts.splice(index, 1);
 
    },
@@ -111,11 +98,11 @@ posts: any [];
      if(error instanceof NotFoundError)
      alert('This post has already been deleted');
 
-     else {
+     else throw error;
 
-      alert('An unexpected error occurred.');
-      console.log(error);
-     }
+      
+     
+     
      
    
    });

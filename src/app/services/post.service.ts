@@ -1,14 +1,19 @@
+import { BadInput } from './../common/bad-input';
+import {NotFoundError } from './../common/not-found-error';
+import { AppError } from './../common/app-error';
+import { Http } from '@angular/http';
+
 import { Injectable } from '@angular/core';
-import {Http} from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/catch';
-import 'rxjs/add/Observablethrow';
+import 'rxjs/add/Observable/throw';
+
 
 
 @Injectable()
-export class PostsService {
+export class PostService {
 
-  private url = 'https://jsonplaceholder.typicode.com/posts';
+  private url = 'http://jsonplaceholder.typicode.com/posts';
 
   constructor(private http: Http) { }
 
@@ -34,7 +39,7 @@ createPost(post) {
   .catch((error: Response) => {
     if(error.status === 400)
      return Observable.throw(new BadInput(error.json()));
-     return Observable.throw(new AppError(error.json()));
+     return Observable.throw(new AppError(error));
   });
 }
 updatePost(post) {
@@ -49,5 +54,8 @@ deletePost(id) {
 
     return Observable.throw(new AppError(error));
    });
+}
+private handleError(error: Response) {
+  
 }
 }
